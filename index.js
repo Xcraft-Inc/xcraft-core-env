@@ -1,0 +1,98 @@
+'use strict';
+
+var fs   = require ('fs');
+var path = require ('path');
+
+var xPlatform = require ('xcraft-core-platform');
+var xConfig   = require ('xcraft-core-etc').load ('xcraft');
+
+var typeList = []
+var envLdPath = {};
+var ldPathList = {
+  xcraft:  {},
+  devroot: {}
+};
+
+
+var updateLdPath = function () {
+  if (envLdPath.hasOwnProperty ('posix')) {
+    process.env.LD_LIBRARY_PATH = ldPathList.devroot.posix.concat (ldPathList.xcraft.posix).join (path.delimiter);
+  }
+  if (envLdPath.hasOwnProperty ('darwin')) {
+    process.env.DYLD_LIBRARY_PATH = ldPathList.devroot.darwin.concat (ldPathList.xcraft.darwin).join (path.delimiter);
+  }
+};
+
+var main = function () {
+  if (xPlatform.getOs () !== 'win') {
+    typeList.push ('posix');
+    envLdPath.posix = process.env.LD_LIBRARY_PATH || '';
+    ldPathList.xcraft.posix = envLdPath.posix.split (path.delimiter);
+    ldPathList.devroot.posix = [];
+  }
+  if (xPlatform.getOs () === 'darwin') {
+    typeList.push ('darwin');
+    envLdPath.darwin = process.env.DYLD_LIBRARY_PATH || '';
+    ldPathList.xcraft.darwin = envLdPath.darwin.split (path.delimiter);
+    ldPathList.devroot.darwin = [];
+  }
+
+  if (xConfig.hasOwnProperty ('ldPath')) {
+    typeList.forEach (function (type) {
+      if (!xConfig.hasOwnProperty (type)) {
+        return;
+      }
+
+      xConfig.ldPath[type].reverse ().forEach (function (location) {
+        ldPathList.xcraft[type].unshift (location);
+      });
+    });
+  }
+
+  typeList.forEach (function (type) {
+    ldPathList.xcraft[type].unshift (path.resolve ('./usr/lib'));
+  });
+
+  updateLdPath ();
+};
+
+/* FIXME: this function should be called by a file watcher but most file
+ *        watchers are bugged on Windows like:
+ *          node-watch, gaze < 0.6, watchr, chokidar, ...
+ *        When a directory is removed, it is unstable or it breaks with a stupid
+ *        EPERM exception. Maybe it works with gaze >= 0.6, but it needs
+ *        the native compiler and something is broken with node >= 0.12.
+ */
+exports.devrootUpdate = function () {
+  var xFs = require ('xcraft-core-fs');
+
+  var arch = xPlatform.getToolchainArch ();
+
+  typeList.forEach (function (type) {
+    ldPathList.devroot[type].length = 0;
+    ldPathList.devroot[type].unshift (path.join (xConfig.pkgTargetRoot, arch, 'usr/lib'));
+    ldPathList.devroot[type].unshift (path.join (xConfig.pkgTargetRoot, arch, 'lib'));
+
+    var length = ldPathList.devroot[type].length;
+
+    var dir = path.join (xConfig.pkgTargetRoot, arch, 'etc/ldpath');
+    try {
+      xFs.ls (dir).forEach (function (item) {
+        var location = JSON.parse (fs.readFileSync (path.join (dir, item), 'utf8'));
+        location.forEach (function (entry) {
+          if (!path.isAbsolute (entry)) {
+            entry = path.join (xConfig.pkgTargetRoot, arch, entry);
+          }
+
+          pathList.devroot[type].unshift (entry);
+        });
+      });
+    } catch (ex) {
+      ldPathList.devroot[type].length = length;
+    }
+  });
+
+  updateLdPath ();
+};
+
+main ();
