@@ -6,7 +6,7 @@ var path = require ('path');
 var xPlatform = require ('xcraft-core-platform');
 var xConfig   = require ('xcraft-core-etc').load ('xcraft');
 
-var typeList = []
+var typeList = [];
 var envLdPath = {};
 var ldPathList = {
   xcraft:  {},
