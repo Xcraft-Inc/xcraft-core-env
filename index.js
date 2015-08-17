@@ -53,6 +53,10 @@ var main = function () {
     ldPathList.xcraft[type].unshift (path.resolve ('./usr/lib'));
   });
 
+  /* HACK: pkg-config */
+  var arch = xPlatform.getToolchainArch ();
+  process.env.PKG_CONFIG_PATH = path.join (xConfig.pkgTargetRoot, arch, 'usr/lib/pkgconfig');
+
   updateLdPath ();
 };
 
