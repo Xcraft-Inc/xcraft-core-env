@@ -84,7 +84,7 @@ exports.devrootUpdate = function () {
             entry = path.join (xConfig.pkgTargetRoot, arch, entry);
           }
 
-          pathList.devroot[type].unshift (entry);
+          ldPathList.devroot[type].unshift (entry);
         });
       });
     } catch (ex) {
