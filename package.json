@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "Xcraft environment helpers",
   "main": "index.js",
+  "engines": {
+    "node": ">=6"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,5 +25,8 @@
     "xcraft-core-placeholder": "0.1.0",
     "xcraft-core-platform": "0.1.0"
   },
-  "devDependencies": {}
+  "bugs": {
+    "url": "https://github.com/Xcraft-Inc/xcraft-core-env/issues"
+  },
+  "homepage": "https://github.com/Xcraft-Inc/xcraft-core-env#readme"
 }
