@@ -15,8 +15,8 @@
     "env"
   ],
   "repository": {
-    "type": "file",
-    "url": "lib/xcraft-core-env"
+    "type": "git",
+    "url": "git+https://github.com/Xcraft-Inc/xcraft-core-env.git"
   },
   "author": "Mathieu Schroeter",
   "license": "MIT",
