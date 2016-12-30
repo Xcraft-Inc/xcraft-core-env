@@ -8,7 +8,7 @@ var env = {};
 var envList = xFs.ls (envRoot, /\.js$/);
 
 envList.forEach (function (file) {
-  var name = file.replace (/\.js$/, '');
+  var name = file.replace (/^[0-9]+\.(.*)\.js$/, '$1');
   env[name] = require (path.join (envRoot, file));
 });
 
