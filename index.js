@@ -1,7 +1,7 @@
 'use strict';
 
 var path = require ('path');
-var xFs  = require ('xcraft-core-fs');
+var xFs = require ('xcraft-core-fs');
 
 var envRoot = path.join (__dirname, 'lib/env');
 var env = {};
