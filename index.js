@@ -1,15 +1,15 @@
 'use strict';
 
-var path = require ('path');
-var xFs = require ('xcraft-core-fs');
+var path = require('path');
+var xFs = require('xcraft-core-fs');
 
-var envRoot = path.join (__dirname, 'lib/env');
+var envRoot = path.join(__dirname, 'lib/env');
 var env = {};
-var envList = xFs.ls (envRoot, /\.js$/);
+var envList = xFs.ls(envRoot, /\.js$/);
 
-envList.forEach (function (file) {
-  var name = file.replace (/^[0-9]+\.(.*)\.js$/, '$1');
-  env[name] = require (path.join (envRoot, file));
+envList.forEach(function(file) {
+  var name = file.replace(/^[0-9]+\.(.*)\.js$/, '$1');
+  env[name] = require(path.join(envRoot, file));
 });
 
 /* FIXME: this function should be called by a file watcher but most file
@@ -19,10 +19,10 @@ envList.forEach (function (file) {
  *        EPERM exception. Maybe it works with gaze >= 0.6, but it needs
  *        the native compiler and something is broken with node >= 0.12.
  */
-exports.devrootUpdate = function () {
-  Object.keys (env).forEach (function (key) {
-    if (env[key].hasOwnProperty ('devrootUpdate')) {
-      env[key].devrootUpdate ();
+exports.devrootUpdate = function() {
+  Object.keys(env).forEach(function(key) {
+    if (env[key].hasOwnProperty('devrootUpdate')) {
+      env[key].devrootUpdate();
     }
   });
 };
