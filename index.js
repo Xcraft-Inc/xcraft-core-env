@@ -19,10 +19,10 @@ envList.forEach(function(file) {
  *        EPERM exception. Maybe it works with gaze >= 0.6, but it needs
  *        the native compiler and something is broken with node >= 0.12.
  */
-exports.devrootUpdate = function() {
+exports.devrootUpdate = function(distribution) {
   Object.keys(env).forEach(function(key) {
     if (env[key].hasOwnProperty('devrootUpdate')) {
-      env[key].devrootUpdate();
+      env[key].devrootUpdate(distribution);
     }
   });
 };
