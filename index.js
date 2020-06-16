@@ -5,7 +5,7 @@ var xFs = require('xcraft-core-fs');
 
 var envRoot = path.join(__dirname, 'lib/env');
 var env = {};
-var envList = xFs.ls(envRoot, /\.js$/);
+var envList = xFs.ls(envRoot, /\.js$/).sort();
 
 envList.forEach(function (file) {
   var name = file.replace(/^[0-9]+\.(.*)\.js$/, '$1');
