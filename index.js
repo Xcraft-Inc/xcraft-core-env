@@ -21,7 +21,7 @@ envList.forEach(function (file) {
  */
 exports.devrootUpdate = function (distribution) {
   Object.keys(env).forEach(function (key) {
-    if (env[key].hasOwnProperty('devrootUpdate')) {
+    if (env[key].devrootUpdate) {
       env[key].devrootUpdate(distribution);
     }
   });
