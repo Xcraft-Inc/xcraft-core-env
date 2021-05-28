@@ -2,6 +2,7 @@
 
 var path = require('path');
 var xFs = require('xcraft-core-fs');
+const xPlatform = require('xcraft-core-platform');
 
 var envRoot = path.join(__dirname, 'lib/env');
 var env = {};
@@ -28,3 +29,15 @@ exports.devrootUpdate = function (distribution) {
 };
 
 exports.var = env;
+
+/* Preprocess environment for pacman rules.env variables */
+exports.pp = (env) =>
+  Object.keys(env)
+    .filter(
+      (key) =>
+        key.indexOf('/') === -1 || key.startsWith(`${xPlatform.getOs()}/`)
+    )
+    .reduce((out, key) => {
+      out[key.replace(/^[^/]+[/]/, '')] = env[key];
+      return out;
+    }, {});
