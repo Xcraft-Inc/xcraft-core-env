@@ -22,10 +22,10 @@
   "license": "MIT",
   "dependencies": {
     "which": "^2.0.2",
-    "xcraft-core-etc": "^2.0.0",
-    "xcraft-core-fs": "^2.0.0",
-    "xcraft-core-placeholder": "^1.0.0",
-    "xcraft-core-platform": "^1.0.0"
+    "xcraft-core-etc": "^3.0.0",
+    "xcraft-core-fs": "^2.1.0",
+    "xcraft-core-placeholder": "^1.2.0",
+    "xcraft-core-platform": "^1.0.1"
   },
   "bugs": {
     "url": "https://github.com/Xcraft-Inc/xcraft-core-env/issues"
