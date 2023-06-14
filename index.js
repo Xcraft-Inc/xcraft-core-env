@@ -33,10 +33,16 @@ exports.var = env;
 /* Preprocess environment for pacman rules.env variables */
 exports.pp = (env) =>
   Object.keys(env)
-    .filter(
-      (key) =>
-        key.indexOf('/') === -1 || key.startsWith(`${xPlatform.getOs()}/`)
-    )
+    .filter((key) => {
+      if (key.indexOf('/') === -1) {
+        return true;
+      }
+      const [os, arch] = key.split('/')[0].split('-');
+      if (arch && arch !== xPlatform.getArch()) {
+        return false;
+      }
+      return os === xPlatform.getOs();
+    })
     .reduce((out, key) => {
       out[key.replace(/^[^/]+[/]/, '')] = env[key];
       return out;
