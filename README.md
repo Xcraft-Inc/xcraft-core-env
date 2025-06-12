@@ -126,7 +126,7 @@ Classe utilitaire pour l'injection de placeholders dans les chaînes de configur
 
 #### Méthodes publiques
 
-- **`injectPh(data, distribution)`** — Injecte les placeholders système dans une chaîne de données, en remplaçant les variables comme `${ROOTDIR}`, `${ARCH}`, `${ENV.VAR}`, etc. Supporte les chemins POSIX et Windows avec normalisation automatique.
+- **`injectPh(data, distribution)`** — Injecte les placeholders système dans une chaîne de données, en remplaçant les variables comme `{OS.ROOTDIR}`, `{OS.ARCH}`, `{OS.ENV.VAR}`, etc. Supporte les chemins POSIX et Windows avec normalisation automatique.
 
 ### `lib/vars.js`
 
