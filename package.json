@@ -1,6 +1,6 @@
 {
   "name": "xcraft-core-env",
-  "version": "3.0.12",
+  "version": "3.0.13",
   "description": "Xcraft environment helpers",
   "main": "index.js",
   "engines": {
